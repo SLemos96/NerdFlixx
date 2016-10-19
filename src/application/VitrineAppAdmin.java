@@ -1,19 +1,16 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -44,6 +41,7 @@ public class VitrineAppAdmin extends Application{
 	private static Carrinho favList;
 	private Button btSair;
 	private static Stage stage;
+	private List imageview;
 
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
@@ -114,6 +112,10 @@ public class VitrineAppAdmin extends Application{
 		}
 		
 		this.setCarrinho(new Carrinho());
+	
+		for(int i = 0; i < listItens.size(); i++){
+		imageview.get(i).setImage(listItens.get(i));
+		}
 		
 		//initItens();
 	}
@@ -121,6 +123,9 @@ public class VitrineAppAdmin extends Application{
 	private void initItens() {
 		
 		Vitrine v = new Vitrine();
+		
+		imageview = new ArrayList<ImageView>();
+		
 		v.addFilmes(new Filme(new Image("resources/imgs/pikachu.png"), "Teste", "HAÇA", 12, 8, 35, 100, "Cat", "Dir", "Ator", 10));
 		for(Filme filme : v.getFilmes())
 			listItens.add(filme);
@@ -131,7 +136,8 @@ public class VitrineAppAdmin extends Application{
 	
 	private ObservableList<Filme> findItems(){
 		ObservableList<Filme> itensEncontrados = FXCollections.observableArrayList();
-		for(Filme itens : this.listItens){
+		for(Filme itens :
+			this.listItens){
 			if(itens.getNome().contains(this.txPesquisa.getText())){
 				itensEncontrados.add(itens);
 			}
